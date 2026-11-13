@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+    .gray {
+        color: gray;
+    }
+
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+</style>
+</head>
+<body>
+    <div id="app">
+        <button :class="buttonColor" @click="toggle">Change color</button>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    buttonColor: "green",
+                    active: false
+                };
+            },
+
+            methods: {
+                toggle() {
+                    this.active = !this.active;
+                    if(this.active){
+                        this.buttonColor = "red";
+                    } else {
+                        this.buttonColor = "green";
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
