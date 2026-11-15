@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+   
+</style>
+</head>
+<body>
+    <div id="app">
+        <input v-on:input="render" v-model="text" type="text">
+        <button :disabled="isThereText" @click="clear">Clear</button> </r>
+        <p>{{message}}</p>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    text: "",
+                    message: "Enter your name above",
+                    isThereText: true
+                };
+            },
+
+            methods: {
+               clear() {
+                    this.text = "";
+               },
+               
+               render() {
+                    if(this.text.length > 0){
+                        this.isThereText = false;
+                        this.message = "Hello, " + this.text;
+                    }else{
+                        this.isThereText = true;
+                        this.message = "Enter your name above";
+                    }
+               }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
