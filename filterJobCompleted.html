@@ -12,16 +12,15 @@
 <body>
     <div id="app">
         <label for="">Jobs</label>
-        <ul v-if="jobs.length">
-            <li v-for="job in jobs">{{job.title}} 
-                <span v-if="job.active">ACTIVE</span>
-                <span v-else>INACTIVE</span>
-            </li>
-        </ul>
+            <div v-for="job in jobs">
+                <job-card job=""></job-card>
+            </div>
         <p v-else>No available jobs</p>
     </div>
 
-    <script>
+    <script type="module">
+        import jobCard from "./js/components/AppButton.js";
+
         let app = {
             data() {
                 return {
@@ -31,6 +30,9 @@
                         {id:3, title:'Clean carpet', active:false}
                     ]
                 }
+            },
+            components: {
+                'job-card': jobCard
             }
         }
 
