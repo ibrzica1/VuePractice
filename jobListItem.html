@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Cart</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+   
+</style>
+</head>
+<body>
+    <div id="app">
+        <div v-for="(job,index) in jobs">
+            <job-card :job="job" @remove="removeJob(index)"></job-card>
+        </div>
+    </div>
+
+    <script type="module">
+        import jobListCard from "./js/components/jobListCard.js";
+
+        let app = {
+            data () {
+                return{
+                    jobs: [
+                        {id:1, title:'Washing', location:'Osijek', wage:22.22},
+                        {id:2, title:'Cleaning', location:'Zagreb', wage:33.33},
+                        {id:3, title:'Mopping', location:'Rijeka', wage:44.44},
+                        {id:4, title:'Cooking', location:'Split', wage:55.55},
+                    ]
+                }
+            },
+            components: {
+                'job-card': jobListCard
+            },
+            methods: {
+                removeJob(index) {
+                    this.jobs.splice(index,1);
+                }
+            }
+        }
+
+        Vue.createApp(app).mount('#app');
+    </script>
+</body>
+</html>

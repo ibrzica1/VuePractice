@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Cart</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+   
+</style>
+</head>
+<body>
+    <div id="app">
+       <task-form @task-created="addToTask"></task-form>
+       <task-list :tasks="tasks"></task-list>
+    </div>
+
+    <script type="module">
+        import taskForm from "./js/components/taskForm.js";
+        import taskList from "./js/components/taskList.js";
+
+        let app = {
+            data () {
+                return{
+                    tasks: []
+                }
+            },
+            components: {
+                'task-form': taskForm,
+                'task-list': taskList
+            },
+            methods: {
+                addToTask(event) {
+                    this.tasks.push(event);
+                }
+            }
+        }
+
+        Vue.createApp(app).mount('#app');
+    </script>
+</body>
+</html>
