@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Job Completed</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+   
+</style>
+</head>
+<body>
+    <div id="app">
+        <input v-model="searchQuery" 
+                type="text" 
+                placeholder="Search jobs">
+        <filtered-jobs-list :filtered-jobs="filteredJobs"></filtered-jobs-list>
+    </div>
+
+    <script type="module">
+        import filteredJobList from "./js/components/filteredJobsList.js";
+
+        let app = {
+            data() {
+                return {
+                    searchQuery: "",
+
+                    jobs: [
+                        {id:1, title:'Wash dishes', active:true},
+                        {id:2, title:'Mop floor', active:false},
+                        {id:3, title:'Clean carpet', active:false},
+                        {id:4, title:'Hang clothes', active:false},
+                        {id:5, title:'Organize cabinets', active:false}
+                    ]
+                }
+            },
+            components: {
+                'filtered-jobs-list': filteredJobList
+            },
+            computed: {
+                filteredJobs() {
+                    if(this.searchQuery.length > 1){
+                        return this.jobs.filter(job => job.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+                    }
+                    return this.jobs;
+                }
+            }
+        }
+
+        Vue.createApp(app).mount('#app');
+    </script>
+</body>
+</html>
