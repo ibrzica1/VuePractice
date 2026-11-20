@@ -24,18 +24,20 @@
             data() {
                 return {
                     searchQuery: "",
-
-                    jobs: [
-                        {id:1, title:'Wash dishes', active:true},
-                        {id:2, title:'Mop floor', active:false},
-                        {id:3, title:'Clean carpet', active:false},
-                        {id:4, title:'Hang clothes', active:false},
-                        {id:5, title:'Organize cabinets', active:false}
-                    ]
+                    jobs: []
                 }
             },
             components: {
                 'filtered-jobs-list': filteredJobList
+            },
+            methods: {
+                getJobs() {
+                    fetch('http://localhost:3000/jobs')
+                        .then(response => response.json())
+                        .then(data => {
+                            return this.jobs = data;
+                        })
+                }
             },
             computed: {
                 filteredJobs() {
@@ -43,7 +45,10 @@
                         return this.jobs.filter(job => job.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
                     }
                     return this.jobs;
-                }
+                },
+            },
+            mounted() {
+                this.getJobs();
             }
         }
 
