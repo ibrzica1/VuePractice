@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Job Completed</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+   
+</style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="searchQuery">
+        <p v-if="isLoading">Loading...</p>
+        <p v-if="errorMessage">{{errorMessage}}</p>
+        <div v-else>
+            <div v-for="job in filteredJobs">
+                <job-card @delete-job="removeJob" :job="job"></job-card>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>
+
+    <script type="module">
+        import searchJobListCard from "./js/components/searchJobListCard.js";
+
+        let app = {
+            data() {
+                return {
+                    jobs: [],
+                    isLoading: false,
+                    errorMessage: null,
+                    searchQuery: ""
+                }
+            },
+            computed: {
+                filteredJobs() {
+                    if(this.searchQuery.length < 2){
+                        return this.jobs;
+                    }
+                    return this.jobs.filter(job => job.title.toLowerCase().includes(this.searchQuery.toLowerCase().trim()));
+                }
+            },
+            components: {
+                "job-card": searchJobListCard
+            },
+            methods: {
+                getJobs() {
+                    this.isLoading = true;
+                    this.errorMessage = "";
+                    fetch('http://localhost:3000/jobs')
+                    .then(response => {
+                        if(!response.ok){
+                            throw new Error(`Http error Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.jobs = data ? data : [];
+                    })
+                    .catch(error => {
+                        this.errorMessage = error.message;
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
+                },
+                removeJob(jobId) {
+                    fetch('http://localhost:3000/jobs/' + jobId, { method: 'DELETE' })
+                    .then(response => {
+                        if(!response.ok){
+                            throw new Error(`HTTP request failed, Status:${error.message}`);
+                        }
+                        this.jobs = this.jobs.filter(job => job.id !== jobId);
+                        return response.json();
+                    })
+                    .catch(error => {
+                        this.errorMessage = error.message;
+                    });
+                }
+            },
+            mounted() {
+                this.getJobs();
+            }
+        }
+
+        Vue.createApp(app).mount('#app');
+    </script>
+</body>
+</html>

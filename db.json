@@ -1,9 +1,26 @@
 {
-    "jobs": [
-        {"id":1, "title":"Wash dishes", "active":true},
-        {"id":2, "title":"Mop floor", "active":false},
-        {"id":3, "title":"Clean carpet", "active":false},
-        {"id":4, "title":"Hang clothes", "active":false},
-        {"id":5, "title":"Organize cabinets", "active":false}
-    ]
+  "jobs": [
+    {"id":1, "title":"Wash dishes", "active":true},
+    {
+      "id": "2",
+      "title": "Mop floor",
+      "active": false
+    },
+    {
+      "id": "3",
+      "title": "Clean carpet",
+      "active": false
+    },
+    {
+      "id": "4",
+      "title": "Hang clothes",
+      "active": false
+    },
+    {
+      "id": "5",
+      "title": "Organize cabinets",
+      "active": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
